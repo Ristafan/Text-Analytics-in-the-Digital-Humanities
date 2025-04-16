@@ -199,3 +199,11 @@ r/Feminism
   "wls": null
 }
 ````
+
+
+## Requirements
+libraries (pip install):
+````
+stop-words
+textplot
+````
