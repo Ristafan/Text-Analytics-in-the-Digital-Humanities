@@ -1,6 +1,8 @@
 import os
 import json
 
+from fontTools.misc.cython import returns
+
 
 class JsonPreprocessor:
     def __init__(self, file_path):
@@ -22,8 +24,7 @@ class JsonPreprocessor:
         """
         for json_str in self.json_list:
             obj = json.loads(json_str)
-            self.file_data[obj['id']] = [obj['body']]
-
+            self.file_data[obj['id']] = obj['body']
         return self.file_data
 
     def parse_reddit_posts(self):
@@ -35,9 +36,17 @@ class JsonPreprocessor:
         """
         for json_str in self.json_list:
             obj = json.loads(json_str)
-            self.file_data[obj['id']] = [obj['title'] + " " + obj['selftext']]
+            self.file_data[obj['id']] = obj['title'] + " " + obj['selftext']
 
         return self.file_data
+
+    @staticmethod
+    def return_plain_text(dictionary):
+        txt = ''
+        for value in dictionary.values():
+            txt += value + ' '
+
+        return txt
 
 
 if __name__ == "__main__":
@@ -46,5 +55,6 @@ if __name__ == "__main__":
     preprocessor = JsonPreprocessor(file_path)
     preprocessor.open_json_file()
     comments = preprocessor.parse_reddit_posts()
-    print(comments.keys())
+    txt = preprocessor.return_plain_text(comments)
+    print(txt)
     print(len(comments.keys()), len(comments.values()))
