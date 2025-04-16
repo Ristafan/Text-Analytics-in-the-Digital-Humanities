@@ -1,4 +1,6 @@
 import regex as re
+from stop_words import get_stop_words
+
 
 class NaturalLanguageProcessor:
     def __init__(self, text):
@@ -11,4 +13,7 @@ class NaturalLanguageProcessor:
         self.text = re.sub(r'http\S+', '', self.text)
 
     def remove_stopwords(self):
-        pass
+        stop_words = get_stop_words('english')
+        for word in self.text.split():
+            if word in stop_words:
+                self.text = re.sub(word, '', self.text)
