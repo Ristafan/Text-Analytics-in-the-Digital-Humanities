@@ -51,10 +51,8 @@ class JsonPreprocessor:
 
 if __name__ == "__main__":
     # Example usage
-    file_path = '/data/reddit/MensRights/r_MensRights_posts.jsonl'
+    file_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_posts.jsonl'
     preprocessor = JsonPreprocessor(file_path)
     preprocessor.open_json_file()
-    comments = preprocessor.parse_reddit_posts()
-    txt = preprocessor.return_plain_text(comments)
-    print(txt)
-    print(len(comments.keys()), len(comments.values()))
+    comments = preprocessor.parse_reddit_comments()
+
