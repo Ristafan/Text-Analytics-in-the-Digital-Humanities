@@ -1,7 +1,6 @@
 import os
 import json
-
-from fontTools.misc.cython import returns
+from tqdm import tqdm
 
 
 class JsonPreprocessor:
@@ -22,7 +21,7 @@ class JsonPreprocessor:
         :return:
         A dictionary with comment IDs as keys and lists of comment bodies as values.
         """
-        for json_str in self.json_list:
+        for json_str in tqdm(self.json_list, desc="Parsing comments", unit="comment"):
             obj = json.loads(json_str)
             self.file_data[obj['id']] = obj['body']
         return self.file_data
@@ -34,7 +33,7 @@ class JsonPreprocessor:
         :return:
         A dictionary with post IDs as keys and lists of post bodies as values.
         """
-        for json_str in self.json_list:
+        for json_str in tqdm(self.json_list, desc="Parsing posts", unit="post"):
             obj = json.loads(json_str)
             self.file_data[obj['id']] = obj['title'] + " " + obj['selftext']
 
