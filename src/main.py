@@ -5,35 +5,43 @@ import src.TextAnalytics.KernelDensity as KernelDensity
 import os
 
 
-
-def main_posts(posts_path):
+def main(path, posts):  # True if posts, False if comments
     # Load the posts
-    pass
+    directory = os.path.dirname(path)
+    filename = os.path.basename(path).split('.')[0]
 
-
-def main_comments(comments_path):
-    directory = os.path.dirname(comments_path)
-
-    # Load the comments
-    processor = JsonPreprocessor.JsonPreprocessor(comments_path)
-    processor.open_json_file()
-    comments = processor.parse_reddit_comments()
-    txt = processor.return_plain_text(comments)
-    print(f"Number of comments: {len(comments)}")
+    if posts:
+        # Load the posts
+        processor = JsonPreprocessor.JsonPreprocessor(path)
+        processor.open_json_file()
+        posts = processor.parse_reddit_posts()
+        txt = processor.return_plain_text(posts)
+        print(f"Number of posts: {len(posts)}")
+    else:
+        # Load the comments
+        processor = JsonPreprocessor.JsonPreprocessor(path)
+        processor.open_json_file()
+        posts = processor.parse_reddit_comments()
+        txt = processor.return_plain_text(posts)
+        print(f"Number of comments: {len(posts)}")
 
     # Normalize the text
     nlp = NaturalLanguageProcessor.NaturalLanguageProcessor(txt)
     nlp.lower()
     nlp.remove_links()
     nlp.remove_stopwords()
+    nlp.save_txt(os.path.join(directory, f"{filename}.txt"))
+    print("Text normalized and saved")
 
     # Create the kernel density graph
-
+    kernel_density = KernelDensity.KernelDensity(os.path.join(directory, f"{filename}.txt"))
+    kernel_density.build_graph()
+    kernel_density.save_graph(os.path.join(directory, filename))
 
 
 if __name__ == "__main__":
-    comments_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_comments.jsonl'
-    posts_path = '/data/reddit/MensRights/r_MensRights_posts.jsonl'
+    posts_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/r_Feminism_posts.jsonl'
+    comments_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/r_Feminism_comments(beforeElection).jsonl'
 
-    # main_comments(comments_path)
-
+    # main(posts_path, True)
+    main(comments_path, False)
