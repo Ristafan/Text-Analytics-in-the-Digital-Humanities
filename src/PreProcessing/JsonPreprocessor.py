@@ -11,7 +11,7 @@ class JsonPreprocessor:
         self.file_data = {}
 
     def open_json_file(self):
-        assert os.path.exists(self.file_path), "Path to file is incorrect"
+        assert os.path.exists(self.file_path), f'Path to file is incorrect: {self.file_path}'
         with open(self.file_path, 'r', encoding="utf8") as json_file:
             self.json_list = list(json_file)
 
