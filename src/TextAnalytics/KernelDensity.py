@@ -1,26 +1,27 @@
-from textplot.text import Text
-from textplot.graphs import Skimmer
-from textplot.matrix import Matrix
+from scipy.linalg import bandwidth
+from textplot.helpers import build_graph
+import os
 
 
-# Load the text
-text = Text.from_file("C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/bible.txt")
+class KernelDensity:
+    def __init__(self, file_path, term_depth=500, skim_depth=7, d_weights=False):
+        self.file_path = file_path
+        self.path = os.path.dirname(file_path)
+        self.term_depth = term_depth
+        self.skim_depth = skim_depth
+        self.d_weights = d_weights
+        self.graph = None
 
-# View the number of tokens (excluding stopwords)
-print(f"Number of tokens: {len([t for t in text.tokens if t is not None])}")
+    def build_graph(self, **kwargs):
+        self.graph = build_graph(self.file_path, term_depth=self.term_depth, skim_depth=self.skim_depth, d_weights=self.d_weights, **kwargs)
 
-# Create a term matrix
-matrix = Matrix()
-matrix.index(text)
+    def save_graph(self, name):
+        self.graph.write_graphml(os.path.join(self.path, name + '.graphml'))
 
-# Build the graph
-graph = Skimmer()
-graph.build(text, matrix, skim_depth=3)
 
-# Draw the graph (spring layout)
-graph.draw_spring()
-
-# Save the graph to a GML file
-#graph.write_gml("C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/bible.gml")
-graph.write_graphml("C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/bible.graphml")
-
+if __name__ == "__main__":
+    # Example usage
+    path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/test.txt'
+    kernel_density = KernelDensity(path)
+    kernel_density.build_graph()
+    kernel_density.save_graph("test1")
