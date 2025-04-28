@@ -42,7 +42,7 @@ class JsonPreprocessor:
     @staticmethod
     def return_plain_text(dictionary):
         txt = ''
-        for value in dictionary.values():
+        for value in tqdm(dictionary.values(), desc="Converting to plain text", unit="value"):
             txt += value + ' '
 
         return txt
