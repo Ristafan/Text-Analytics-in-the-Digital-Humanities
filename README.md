@@ -1,6 +1,17 @@
 ## Reddit
 
-First Json files (5.11.24 - 14.4.25)
+Before Election Json files (28.05.24 - 4.11.24) -- **161 days**
+
+r/MensRights
+- 5822 Posts
+- 125560 Comments
+r/Feminism
+- 5940 Posts
+- 63675 Comments
+
+
+After Election Json files (5.11.24 - 14.4.25) -- **161 days**
+
 r/MensRights
 - 6124 Posts
 - 122713 Comments
