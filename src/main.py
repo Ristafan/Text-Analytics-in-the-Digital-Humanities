@@ -4,7 +4,6 @@ import src.TextAnalytics.KernelDensity as KernelDensity
 
 import os
 
-from src.TextAnalytics.TextKernelDensityGraph import TextKernelDensityGraph
 
 
 def main_posts(posts_path):
@@ -28,13 +27,7 @@ def main_comments(comments_path):
     nlp.remove_links()
     nlp.remove_stopwords()
 
-    text_graph = TextKernelDensityGraph(window_size=3, min_word_freq=1, bandwidth=0.5)
-    graph = text_graph.create_graph(nlp.text)
-    # Save the graph to a file
-    graph_path = os.path.join(directory, 'graph.graphml')
-    text_graph.export_graphml(graph_path)
-    print(f"Graph created with {graph.number_of_nodes()} nodes and {graph.number_of_edges()} edges.")
-
+    # Create the kernel density graph
 
 
 
@@ -42,4 +35,5 @@ if __name__ == "__main__":
     comments_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_comments.jsonl'
     posts_path = '/data/reddit/MensRights/r_MensRights_posts.jsonl'
 
-    main_comments(comments_path)
+    # main_comments(comments_path)
+
