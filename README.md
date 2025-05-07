@@ -8,6 +8,9 @@ r/MensRights
 r/Feminism
 - 5940 Posts
 - 63675 Comments
+r/lgbt
+- 37892 Posts
+- 1687656 Comments
 
 
 After Election Json files (5.11.24 - 14.4.25) -- **161 days**
@@ -18,7 +21,9 @@ r/MensRights
 r/Feminism
 - 8668 Posts
 - 107501 Comments
-
+r/lgbt
+- 37209 Posts
+- 417300 Comments
 
 ### Structure reddit json comments
 ```json
@@ -217,4 +222,6 @@ libraries (pip install):
 ````
 stop-words
 textplot
+tqdm
+nltk
 ````
