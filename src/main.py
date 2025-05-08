@@ -75,39 +75,46 @@ def wordCollolcations(directory, filename):
             print(f"Warning: The file {filename}.txt seems to be empty or contains no words after splitting.")
             return
 
-        print(f"Number of words found: {len(words)}")
-        if len(words) < 4: # Or some other threshold depending on n-gram size
-             print(f"Warning: Not enough words for some n-gram calculations. Found: {len(words)}")
-
-        # Create Bigram collocations
+        # --- Bigram Collocations ---
         print("\n--- Bigram Collocations ---")
-        bigram_finder = BigramCollocationFinder.from_words(words)
-        bigram_finder.apply_freq_filter(3) # Ensure this filter is appropriate for your dataset size
-        # You might want to check if bigram_finder.word_fd is empty after filtering
-        # or if len(bigram_finder.score_ngrams(BigramAssocMeasures.likelihood_ratio)) is 0
-        coll2 = bigram_finder.nbest(BigramAssocMeasures.likelihood_ratio, 30)
+        bigram_filter = max(len(words) // 1000, 2)  # Start with a reasonable initial filter
+        coll2 = []
+        while len(coll2) < 10 and bigram_filter > 1:
+            bigram_finder = BigramCollocationFinder.from_words(words)
+            bigram_finder.apply_freq_filter(bigram_filter)
+            coll2 = bigram_finder.nbest(BigramAssocMeasures.likelihood_ratio, 30)  # Keep a limit
+            print(f"Bigram filter: {bigram_filter}, Results: {len(coll2)}")
+            bigram_filter -= max(len(words) // 10000, 2)  # Decrease the filter
         coll.append(coll2)
         print(coll2)
 
-        # Create Trigram collocations
+        # --- Trigram Collocations ---
         print("\n--- Trigram Collocations ---")
-        trigram_finder = TrigramCollocationFinder.from_words(words)
-        trigram_finder.apply_freq_filter(3)
-        coll3 = trigram_finder.nbest(TrigramAssocMeasures.likelihood_ratio, 30)
+        trigram_filter = max(len(words) // 2000, 2)  # Start with a reasonable initial filter
+        coll3 = []
+        while len(coll3) < 10 and trigram_filter > 1:
+            trigram_finder = TrigramCollocationFinder.from_words(words)
+            trigram_finder.apply_freq_filter(trigram_filter)
+            coll3 = trigram_finder.nbest(TrigramAssocMeasures.likelihood_ratio, 30)  # Keep a limit
+            print(f"Trigram filter: {trigram_filter}, Results: {len(coll3)}")
+            trigram_filter -= max(len(words) // 10000, 2)  # Decrease the filter
         coll.append(coll3)
         print(coll3)
 
-        # Create Quadgram collocations
-        # NLTK uses TrigramAssocMeasures for Quadgrams as well.
+        # --- Quadgram Collocations ---
         print("\n--- Quadgram Collocations ---")
-        fourgram_finder = QuadgramCollocationFinder.from_words(words)
-        fourgram_finder.apply_freq_filter(3)
-        coll4 = fourgram_finder.nbest(QuadgramAssocMeasures.likelihood_ratio, 30) # Or BigramAssocMeasures
+        fourgram_filter = max(len(words) // 3000, 2)  # Start with a reasonable initial filter
+        coll4 = []
+        while len(coll4) < 10 and fourgram_filter > 1:
+            fourgram_finder = QuadgramCollocationFinder.from_words(words)
+            fourgram_finder.apply_freq_filter(fourgram_filter)
+            coll4 = fourgram_finder.nbest(QuadgramAssocMeasures.likelihood_ratio, 30)  # Keep a limit
+            print(f"Quadgram filter: {fourgram_filter}, Results: {len(coll4)}")
+            fourgram_filter -= max(len(words) // 10000, 2)  # Decrease the filter
         coll.append(coll4)
         print(coll4)
 
-    # If you intend to save 'coll' to a file, you'd do it here.
-    # For example:
+    # Save collocations to a file
     with open(os.path.join(directory, f"{filename}_collocations.txt"), 'w', encoding='utf-8') as outfile:
         outfile.write("Bigrams:\n")
         for item in coll2:
@@ -122,8 +129,8 @@ def wordCollolcations(directory, filename):
 
 if __name__ == "__main__":
     directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/lgbt'
-    posts_filename = 'r_lgbt_posts(afterElection)'
-    comments_filename = 'r_lgbt_comments(afterElection)'
+    posts_filename = 'r_lgbt_posts(beforeElection)'
+    comments_filename = 'r_lgbt_comments(beforeElection)'
 
     # Preprocess the text
     # preprocess_text(os.path.join(directory, posts_filename), True)
