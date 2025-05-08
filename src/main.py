@@ -60,46 +60,79 @@ def wordCollolcations(directory, filename):
     """
     coll = []
 
-    with open(os.path.join(directory, f"{filename}.txt")) as f:
-        text = f.read()
+    with open(os.path.join(directory, f"{filename}.txt"), 'r', encoding='utf-8') as f:
+        text_content = f.read()
+
+        # Split the text into words
+        # This assumes words are separated by whitespace.
+        # For more advanced tokenization (handling punctuation, etc.),
+        # consider using nltk.word_tokenize
+        words = text_content.split()
+        # from nltk.tokenize import word_tokenize
+        # words = word_tokenize(text_content.lower()) # Example with NLTK tokenizer and lowercasing
+
+        if not words:
+            print(f"Warning: The file {filename}.txt seems to be empty or contains no words after splitting.")
+            return
+
+        print(f"Number of words found: {len(words)}")
+        if len(words) < 4: # Or some other threshold depending on n-gram size
+             print(f"Warning: Not enough words for some n-gram calculations. Found: {len(words)}")
+
         # Create Bigram collocations
-        bigram_collocation = BigramCollocationFinder.from_words(text)
-        bigram_collocation.apply_freq_filter(3)
-        coll2 = bigram_collocation.nbest(BigramAssocMeasures.likelihood_ratio, 30)
+        print("\n--- Bigram Collocations ---")
+        bigram_finder = BigramCollocationFinder.from_words(words)
+        bigram_finder.apply_freq_filter(3) # Ensure this filter is appropriate for your dataset size
+        # You might want to check if bigram_finder.word_fd is empty after filtering
+        # or if len(bigram_finder.score_ngrams(BigramAssocMeasures.likelihood_ratio)) is 0
+        coll2 = bigram_finder.nbest(BigramAssocMeasures.likelihood_ratio, 30)
         coll.append(coll2)
         print(coll2)
 
         # Create Trigram collocations
-        trigram_collocation = TrigramCollocationFinder.from_words(text)
-        trigram_collocation.apply_freq_filter(3)
-        coll3 = trigram_collocation.nbest(TrigramAssocMeasures.likelihood_ratio, 30)
+        print("\n--- Trigram Collocations ---")
+        trigram_finder = TrigramCollocationFinder.from_words(words)
+        trigram_finder.apply_freq_filter(3)
+        coll3 = trigram_finder.nbest(TrigramAssocMeasures.likelihood_ratio, 30)
         coll.append(coll3)
         print(coll3)
 
         # Create Quadgram collocations
-        fourgram_collocation = QuadgramCollocationFinder.from_words(text)
-        fourgram_collocation.apply_freq_filter(3)
-        coll4 = fourgram_collocation.nbest(QuadgramAssocMeasures.likelihood_ratio, 30)
+        # NLTK uses TrigramAssocMeasures for Quadgrams as well.
+        print("\n--- Quadgram Collocations ---")
+        fourgram_finder = QuadgramCollocationFinder.from_words(words)
+        fourgram_finder.apply_freq_filter(3)
+        coll4 = fourgram_finder.nbest(QuadgramAssocMeasures.likelihood_ratio, 30) # Or BigramAssocMeasures
         coll.append(coll4)
         print(coll4)
 
-    with open(os.path.join(directory, f"coll_{filename}.txt"), 'w') as f:
-        for i in coll:
-            f.write(str(i))
-            f.write('\n')
+    # If you intend to save 'coll' to a file, you'd do it here.
+    # For example:
+    with open(os.path.join(directory, f"{filename}_collocations.txt"), 'w', encoding='utf-8') as outfile:
+        outfile.write("Bigrams:\n")
+        for item in coll2:
+            outfile.write(f"{item}\n")
+        outfile.write("\nTrigrams:\n")
+        for item in coll3:
+            outfile.write(f"{item}\n")
+        outfile.write("\nQuadgrams:\n")
+        for item in coll4:
+            outfile.write(f"{item}\n")
 
 
 if __name__ == "__main__":
     directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/lgbt'
-    posts_filename = 'r_lgbt_posts(afterElection).jsonl'
-    comments_filename = 'r_lgbt_comments(afterElection).jsonl'
+    posts_filename = 'r_lgbt_posts(afterElection)'
+    comments_filename = 'r_lgbt_comments(afterElection)'
 
     # Preprocess the text
-    preprocess_text(os.path.join(directory, posts_filename), True)
-    preprocess_text(os.path.join(directory, comments_filename), False)
+    # preprocess_text(os.path.join(directory, posts_filename), True)
+    # preprocess_text(os.path.join(directory, comments_filename), False)
 
     # Generate Kernel Density Estimation for posts and comments
-    kernelDensityEstimation(directory, posts_filename)
-    kernelDensityEstimation(directory, comments_filename)
+    # kernelDensityEstimation(directory, posts_filename)
+    # kernelDensityEstimation(directory, comments_filename)
 
     # Generate word collocations for posts and comments
+    wordCollolcations(directory, posts_filename)
+    wordCollolcations(directory, comments_filename)
