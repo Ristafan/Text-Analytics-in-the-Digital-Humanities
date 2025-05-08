@@ -128,9 +128,9 @@ def wordCollolcations(directory, filename):
 
 
 if __name__ == "__main__":
-    directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/lgbt'
-    posts_filename = 'r_lgbt_posts(beforeElection)'
-    comments_filename = 'r_lgbt_comments(beforeElection)'
+    directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism'
+    posts_filename = 'r_Feminism_posts(afterElection)'
+    comments_filename = 'r_Feminism_comments(afterElection)'
 
     # Preprocess the text
     # preprocess_text(os.path.join(directory, posts_filename), True)
