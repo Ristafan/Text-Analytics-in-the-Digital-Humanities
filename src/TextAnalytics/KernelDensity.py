@@ -1,4 +1,3 @@
-from scipy.linalg import bandwidth
 from textplot.helpers import build_graph
 import os
 
