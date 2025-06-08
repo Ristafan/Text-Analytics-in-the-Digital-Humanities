@@ -43,10 +43,10 @@ class OverallTfidfComputer:
 
 
 if __name__ == '__main__':
-    posts_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_posts(beforeElection).jsonl'
-    comments_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_comments(beforeElection).jsonl'
-    output_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/MensRights(before)_linked_data_normalized.json'
-    overall_tfidf_output_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/MensRights(before)_overall_tfidf_keywords_normalized.json'
+    posts_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/r_Feminism_posts(afterElection).jsonl'
+    comments_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/r_Feminism_comments(afterElection).jsonl'
+    output_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/Feminism()_linked_data.json'
+    overall_tfidf_output_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism/Feminism(after)_overall_tfidf_keywords.json'
 
     linker = PostsCommentsLinker(posts_path, comments_path)
     linker.link_comments_to_posts()

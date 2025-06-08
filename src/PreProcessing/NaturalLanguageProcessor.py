@@ -18,7 +18,6 @@ class NaturalLanguageProcessor:
 
         for i in range(len(self.methods)):
             if self.methods_bool[i]:
-                print(self.text)
                 self.methods[i]()
 
     def save_txt(self, file_path):
@@ -34,7 +33,7 @@ class NaturalLanguageProcessor:
     def remove_stopwords(self):
         stop_words = []
         # PreProcessing/stopwords.txt
-        with open('stopwords.txt', 'r', encoding='utf-8') as file:
+        with open('PreProcessing/stopwords.txt', 'r', encoding='utf-8') as file:
             for word in file.readlines():
                 stop_words.append(word.strip())
 
@@ -77,7 +76,7 @@ class NaturalLanguageProcessor:
 
 if __name__ == "__main__":
     # Example usage
-    text = "This is a **sample** text* * *with ;a ] link http://example.com and some \" $stop words ✍ 😉🌷 📌 👈🏻 🖥."
+    text = "This is a **sample** text* * *with ;a ] link [removed] http://example.com and some \" $stop words ✍ 😉🌷 📌 👈🏻 🖥."
     nlp = NaturalLanguageProcessor(text)
     print()
     print(text)

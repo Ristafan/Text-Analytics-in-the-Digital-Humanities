@@ -4,8 +4,9 @@ from tqdm import tqdm
 
 
 class JsonPreprocessor:
-    def __init__(self, file_path):
+    def __init__(self, file_path, time):
         self.file_path = file_path
+        self.time = time
         self.json_list = None
         self.file_data = {}
 
@@ -23,7 +24,7 @@ class JsonPreprocessor:
         """
         for json_str in tqdm(self.json_list, desc="Parsing comments", unit="comment"):
             obj = json.loads(json_str)
-            self.file_data[obj['id']] = obj['body']
+            self.file_data[obj['id']] = obj['body'] + " " + self.time
         return self.file_data
 
     def parse_reddit_posts(self):
@@ -35,7 +36,7 @@ class JsonPreprocessor:
         """
         for json_str in tqdm(self.json_list, desc="Parsing posts", unit="post"):
             obj = json.loads(json_str)
-            self.file_data[obj['id']] = obj['title'] + " " + obj['selftext']
+            self.file_data[obj['id']] = obj['title'] + " " + obj['selftext'] + " " + self.time
 
         return self.file_data
 
@@ -51,7 +52,7 @@ class JsonPreprocessor:
 if __name__ == "__main__":
     # Example usage
     file_path = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights/r_MensRights_posts.jsonl'
-    preprocessor = JsonPreprocessor(file_path)
+    preprocessor = JsonPreprocessor(file_path, time='afterElection')
     preprocessor.open_json_file()
     comments = preprocessor.parse_reddit_comments()
 

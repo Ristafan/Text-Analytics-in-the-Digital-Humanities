@@ -5,11 +5,10 @@ import src.PreProcessing.NaturalLanguageProcessor as NaturalLanguageProcessor
 import src.TextAnalytics.KernelDensity as KernelDensity
 
 import os
-import nltk
 from nltk.collocations import *
 
 
-def preprocess_text(path, posts):
+def preprocess_text(path, posts, time):
     """
     Preprocess the text by loading the posts or comments from a JSON file, normalizing the text, and saving it to a TXT file.
     :param path: Path to the JSON file.
@@ -20,14 +19,14 @@ def preprocess_text(path, posts):
 
     if posts:
         # Load the posts
-        processor = JsonPreprocessor.JsonPreprocessor(path)
+        processor = JsonPreprocessor.JsonPreprocessor(path, time)
         processor.open_json_file()
         posts = processor.parse_reddit_posts()
         txt = processor.return_plain_text(posts)
         print(f"Number of posts: {len(posts)}")
     else:
         # Load the comments
-        processor = JsonPreprocessor.JsonPreprocessor(path)
+        processor = JsonPreprocessor.JsonPreprocessor(path, time)
         processor.open_json_file()
         posts = processor.parse_reddit_comments()
         txt = processor.return_plain_text(posts)
@@ -37,6 +36,18 @@ def preprocess_text(path, posts):
     nlp = NaturalLanguageProcessor.NaturalLanguageProcessor(txt)
     nlp.save_txt(os.path.join(directory, f"{filename}.txt"))
     print("Text normalized and saved")
+
+def combine_text_files(directory, filename1, filename2):
+    """
+    Combine two text files into one.
+    :param directory: Directory where the text files are located.
+    :param filename1: Name of the first text file.
+    :param filename2: Name of the second text file.
+    """
+    with open(os.path.join(directory, f"{filename1}.txt"), 'r', encoding='utf-8') as f1, \
+         open(os.path.join(directory, f"{filename2}.txt"), 'r', encoding='utf-8') as f2, \
+         open(os.path.join(directory, f"{filename1}_{filename2}_combined.txt.txt"), 'w', encoding='utf-8') as outfile:
+        outfile.write(f1.read() + "\n" + f2.read())
 
 
 def kernelDensityEstimation(directory, filename):
@@ -128,18 +139,30 @@ def wordCollolcations(directory, filename):
 
 
 if __name__ == "__main__":
-    directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/Feminism'
-    posts_filename = 'r_Feminism_posts(afterElection)'
-    comments_filename = 'r_Feminism_comments(afterElection)'
+    directory = 'C:/Users/marti/documents/Text-Analytics-in-the-Digital-Humanities/data/reddit/MensRights'
+    posts_filename_after = 'r_MensRights_posts(afterElection).jsonl'
+    comments_filename_after = 'r_MensRights_comments(afterElection).jsonl'
+
+    posts_filename_before = 'r_MensRights_posts(beforeElection).jsonl'
+    comments_filename_before = 'r_MensRights_comments(beforeElection).jsonl'
+
+    combined_posts_filename = f"{posts_filename_after[:-6]}_{posts_filename_before[:-6]}_combined.txt"
+    combined_comments_filename = f"{comments_filename_after[:-6]}_{comments_filename_before[:-6]}_combined.txt"
 
     # Preprocess the text
-    # preprocess_text(os.path.join(directory, posts_filename), True)
-    # preprocess_text(os.path.join(directory, comments_filename), False)
+    preprocess_text(os.path.join(directory, posts_filename_before), True, "beforeTheElection")
+    preprocess_text(os.path.join(directory, comments_filename_before), False, "beforeTheElection")
+    preprocess_text(os.path.join(directory, posts_filename_after), True, "afterTheElection")
+    preprocess_text(os.path.join(directory, comments_filename_after), False, "afterTheElection")
+
+    # Append the posts and comments from the second set of files
+    combine_text_files(directory, posts_filename_after[:-6], posts_filename_before[:-6])  # Remove '.jsonl' from filename
+    combine_text_files(directory, comments_filename_after[:-6], comments_filename_before[:-6])  # Remove '.jsonl' from filename
 
     # Generate Kernel Density Estimation for posts and comments
-    # kernelDensityEstimation(directory, posts_filename)
-    # kernelDensityEstimation(directory, comments_filename)
+    kernelDensityEstimation(directory, combined_posts_filename)
+    kernelDensityEstimation(directory, combined_comments_filename)
 
     # Generate word collocations for posts and comments
-    wordCollolcations(directory, posts_filename)
-    wordCollolcations(directory, comments_filename)
+    # wordCollolcations(directory, posts_filename)
+    # wordCollolcations(directory, comments_filename)
