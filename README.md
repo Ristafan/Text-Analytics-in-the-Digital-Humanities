@@ -1,3 +1,45 @@
+# Text Analytics for Digital Humanities: A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre and post 2024 Trump Election
+This repository has been made for a student project in the seminar "Text Analytics for Digital Humanities" at the University of Zurich. 
+
+# # Brief Description
+In what follows, scripts containing the coding for the project "A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre and post 2024 Trump Election”. 
+Our Abstract or some more information
+
+# #Table of Contents:
+1. How to Install and Run the Project
+2. Download Data
+3. Pre-Processing
+4. Models and Evaluation
+5. Visualization and tables or further links
+6. Scripts
+7. Credits
+8. Reddit
+  Structure reddit json comments
+9. Requierements
+
+# # #1.	How to Install and Run the Project
+The scripts should be run in the following order:
+# # #2.	Download Data
+Download the dataset from xxxx with the below link and store it in the same folder as the scripts are:
+‘xxxx’
+# # #3.	Pre-Processing
+Pre-processes the downloaded dataset by using the command below with the script ‘xxxxx’, 'xxxx' etc. Adapt the name of the file if needed, and keep the generated preprocessed dataset 'xxxx' stored in the same folder as the scripts are:
+‘xxxx’ 
+# # #4.	Model & Evaluation
+To use the models, use the command below with the script xxxxxxxx generated above. Adapt the names of the file and script if needed.
+‘xxxxx’
+# # #5.	Visualization if separately or further tables
+xxxx
+# # #Scripts included:
+xxxx.py
+xxxx.py
+main.py
+# # #Credits
+Authors:
+Martin Fähnrich, Jasmin Schiltknecht, Luka Gfeller
+ChatGPT. OpenAI, 14 June 2025, https://www.openai.com/.
+Claude.ai. Anthropic, 14 June 2025, https://claude.ai.
+
 ## Reddit
 
 Before Election Json files (28.05.24 - 4.11.24) -- **161 days**
