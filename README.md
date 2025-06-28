@@ -1,15 +1,16 @@
-# Text Analytics for Digital Humanities: A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre and post 2024 Trump Election
+# Text Analytics for Digital Humanities: A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre- and post-Election of D.J. Trump's 2024 Presidential Campaign
 This repository has been made for a student project in the seminar "Text Analytics for Digital Humanities" at the University of Zurich. 
 
 # # Brief Description
-In what follows, scripts containing the coding for the project "A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre and post 2024 Trump Election”. 
+In what follows, scripts containing the coding for the project "A Comparative Analysis of Language Use in Gendered Political Forums on Reddit pre- and post-Election of D.J. Trump's 2024 Presidential Campaign”. 
+
 Our Abstract or some more information
 
 # #Table of Contents:
 1. How to Install and Run the Project
 2. Download Data
 3. Pre-Processing
-4. Models and Evaluation
+4. Models 
 5. Visualization and tables or further links
 6. Scripts
 7. Credits
@@ -25,7 +26,7 @@ Download the dataset from xxxx with the below link and store it in the same fold
 # # #3.	Pre-Processing
 Pre-processes the downloaded dataset by using the command below with the script ‘xxxxx’, 'xxxx' etc. Adapt the name of the file if needed, and keep the generated preprocessed dataset 'xxxx' stored in the same folder as the scripts are:
 ‘xxxx’ 
-# # #4.	Model & Evaluation
+# # #4.	Models
 To use the models, use the command below with the script xxxxxxxx generated above. Adapt the names of the file and script if needed.
 ‘xxxxx’
 # # #5.	Visualization if separately or further tables
