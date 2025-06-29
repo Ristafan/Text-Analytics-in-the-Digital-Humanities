@@ -1,4 +1,4 @@
-### README: Digital Humanities Reddit Gender Studies Project
+### Digital Humanities Reddit Gender Studies Project
 
 **Project Title:** A Comparative Analysis of Language Use in Gendered Political Communities on Reddit during Trump's Pre- and Post-Election 2024
 
